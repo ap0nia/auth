@@ -74,14 +74,14 @@ importers:
   apps/dashboard:
     dependencies:
       '@aponia.js/auth.js':
-        specifier: ^0.6.2
-        version: 0.6.2(nodemailer@6.9.13)
+        specifier: ^0.6.5
+        version: 0.6.5(nodemailer@6.9.13)
       '@aponia.js/core':
-        specifier: ^0.6.2
-        version: 0.6.2
+        specifier: ^0.6.5
+        version: 0.6.5
       '@aponia.js/sveltekit':
-        specifier: ^0.6.2
-        version: 0.6.2(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
+        specifier: ^0.6.5
+        version: 0.6.5(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
       '@auth/core':
         specifier: ^0.28.2
         version: 0.28.2(nodemailer@6.9.13)
@@ -493,14 +493,14 @@ packages:
       }
     dev: true
 
-  /@aponia.js/auth.js@0.6.2(nodemailer@6.9.13):
+  /@aponia.js/auth.js@0.6.5(nodemailer@6.9.13):
     resolution:
       {
-        integrity: sha512-qKqSZ/puNmlHVufZiF5S077fNVmlsk7oP2meBg0QdJBlpET8S/zh6u6WuHbYBEUNGgz+g2qiJQpheU4imSTfnQ==,
+        integrity: sha512-1jeAML2GAsyk4Mxb07L3IBV+pp9N13eK3cbzDqRVOgkHSZKksx7wcEGleatqTzzCiQdDmmEzRs4hGPltiifK+g==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
-      '@aponia.js/core': 0.6.2
+      '@aponia.js/core': 0.6.5
       '@auth/core': 0.28.2(nodemailer@6.9.13)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
@@ -508,10 +508,10 @@ packages:
       - nodemailer
     dev: false
 
-  /@aponia.js/core@0.6.2:
+  /@aponia.js/core@0.6.5:
     resolution:
       {
-        integrity: sha512-HP6VACtXUIlQ11uiroR03Hgi2Wqm/ekaW9Lo9B7n0Ldj3tVrhFRM/Hwf2RLEy4AD+W8XLAbMjgkyPAHhM75pxA==,
+        integrity: sha512-FdxnANETZQeVdKpcrvA/l2rvN3656kJissItVd+7uaUAP2JqGLtKRCLH2Nq8wjVhC6Mpt7OgM6F1VMAQ4BOS8A==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
@@ -521,14 +521,14 @@ packages:
       radix3: 1.1.2
     dev: false
 
-  /@aponia.js/sveltekit@0.6.2(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10):
+  /@aponia.js/sveltekit@0.6.5(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10):
     resolution:
       {
-        integrity: sha512-DXzETDtqrqDj15SjLrzz5hGs3p5Si+1DaRLckHs8VmBrnc7ATcIxYttzHi9fpgIIjSF3LH8kl2bhnJCkVl6c7g==,
+        integrity: sha512-hQKV/jOkTO1QuOdgcddWJih5dJtmJlZCJgp+8Geb6EL9iLpdB4omeulxvbIYWXLZMdxZmWCwbK+6OT/36xywow==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
-      '@aponia.js/core': 0.6.2
+      '@aponia.js/core': 0.6.5
       '@sveltejs/kit': 2.5.7(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
     transitivePeerDependencies:
       - '@sveltejs/vite-plugin-svelte'

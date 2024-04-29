@@ -34,15 +34,8 @@ declare global {
   }
 
   namespace App {
-    interface Locals {
-      getUser: () => Promise<Aponia.User | undefined>
-      getSession: () => Promise<Aponia.Session | undefined>
-      getRefresh: () => Promise<Aponia.Refresh | undefined>
-    }
+    interface Locals {}
 
-    interface PageData {
-      user: Aponia.User | undefined
-      session: Aponia.Session | undefined
-    }
+    interface PageData {}
   }
 }

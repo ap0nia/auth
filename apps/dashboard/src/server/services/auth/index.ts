@@ -7,13 +7,13 @@ import { OIDCProvider } from '@aponia.js/auth.js/providers/oidc'
 import { AdapterPlugin } from '@aponia.js/core/adapter'
 import { Auth } from '@aponia.js/core/auth'
 import { JwtSessionPlugin } from '@aponia.js/core/plugins/session/jwt'
-import Google from '@auth/core/providers/google'
+import Google, { type GoogleProfile as _GoogleProfile } from '@auth/core/providers/google'
 
 import { GOOGLE_ID, GOOGLE_SECRET } from '$env/static/private'
 
 import { adapter as rawAdapter } from './adapter'
 
-const google = new OIDCProvider(
+export const google = new OIDCProvider(
   Google({
     clientId: GOOGLE_ID,
     clientSecret: GOOGLE_SECRET,
@@ -35,6 +35,10 @@ export const auth = new Auth({
   /**
    * Handle callback routes manually to enable dynamic redirections.
    */
-  exclude: ['/auth/callback/.*'],
+  // exclude: ['/auth/callback/.*'],
   plugins: [google, adapter, jwt],
 })
+
+export const providers = {
+  google,
+}
