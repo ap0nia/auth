@@ -1,7 +1,6 @@
 {
   "extends": ["@icssc/tsconfig", "./.svelte-kit/tsconfig.json"],
   "compilerOptions": {
-    "baseUrl": ".",
     "plugins": [
       {
         "name": "typescript-svelte-plugin"
