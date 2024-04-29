@@ -1,0 +1,21 @@
+{
+  "name": "@icssc/prettier-config",
+  "version": "0.0.0",
+  "description": "shared prettier config",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icssc/auth",
+    "directory": "packages/prettier"
+  },
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "devDependencies": {
+    "@icssc/tsconfig": "workspace:^",
+    "prettier": "^3.0.0",
+    "prettier-plugin-svelte": "^3.2.2",
+    "prettier-plugin-tailwindcss": "^0.5.13"
+  }
+}
