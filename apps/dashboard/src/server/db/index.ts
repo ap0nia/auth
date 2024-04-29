@@ -1,8 +1,6 @@
 import { relations } from 'drizzle-orm'
 
-import { account } from './auth/account'
-import { session } from './auth/session'
-import { user } from './auth/user'
+import { account, session, user } from './auth'
 
 export const userRelations = relations(user, (helpers) => {
   return {
@@ -38,4 +36,5 @@ export const accountRelations = relations(account, (helpers) => {
   }
 })
 
-export { account, session, user }
+export * from './auth'
+export * from './state'

@@ -1,7 +1,9 @@
 import { eventToRequest } from '@aponia.js/sveltekit'
 import { error } from '@sveltejs/kit'
 
+import { state } from '$server/db/state'
 import { auth } from '$server/services/auth'
+import { db } from '$server/services/db'
 
 import type { RequestHandler } from './$types'
 
@@ -14,23 +16,32 @@ export const GET: RequestHandler = async (event) => {
   }
 
   /**
-   * Create custom state variable, which is a key to database for storing redirect.
+   * Origin of the authentication request.
    */
-  const state = 'HI'
+  const redirectUrl = event.url.searchParams.get('redirect_url')
 
-  // Update the original OAuth redirect URL to include the state variable.
-  const redirectUrl = new URL(authResponse.redirect)
+  // If the authentication request originated from a different domain, create a database entry.
+  if (redirectUrl != null) {
+    const [newState] = await db.insert(state).values({ redirectUrl }).returning()
 
-  redirectUrl.searchParams.set('state', state)
+    if (newState == null) {
+      return error(500, `Failed to create auth response for: ${event.params.provider}`)
+    }
 
-  // Update the original auth response.
-  authResponse.redirect = redirectUrl.toString()
+    // Update the original OAuth redirect URL to include the state variable.
+    const oauthRedirectUrl = new URL(authResponse.redirect)
 
-  const authResponseWithState = auth.toResponse(authResponse)
+    oauthRedirectUrl.searchParams.set('state', newState.id)
 
-  if (authResponseWithState == null) {
+    // Update the original auth response.
+    authResponse.redirect = oauthRedirectUrl.toString()
+  }
+
+  const response = auth.toResponse(authResponse)
+
+  if (response == null) {
     return error(500, `Failed to create auth response for: ${event.params.provider}`)
   }
 
-  return authResponseWithState
+  return response
 }

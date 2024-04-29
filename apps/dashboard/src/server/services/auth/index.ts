@@ -32,10 +32,6 @@ const adapter = new AdapterPlugin(rawAdapter)
 export const jwt = new JwtSessionPlugin()
 
 export const auth = new Auth({
-  /**
-   * Handle callback routes manually to enable dynamic redirections.
-   */
-  // exclude: ['/auth/callback/.*'],
   plugins: [google, adapter, jwt],
 })
 
