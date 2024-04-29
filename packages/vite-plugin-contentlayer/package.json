@@ -1,0 +1,25 @@
+{
+  "name": "@icssc/vite-plugin-contentlayer",
+  "version": "0.0.0",
+  "description": "custom vite plugin for contentlayer",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icssc/auth",
+    "directory": "packages/vite-plugin-contentlayer"
+  },
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "devDependencies": {
+    "@icssc/tsconfig": "workspace:^",
+    "esbuild": "0.18",
+    "vite": "^5.2.6"
+  },
+  "dependencies": {
+    "@contentlayer/core": "^0.3.4",
+    "@contentlayer/utils": "^0.3.4",
+    "@opentelemetry/api": "1.4"
+  }
+}

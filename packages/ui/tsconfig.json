@@ -1,0 +1,10 @@
+{
+  "extends": ["@icssc/tsconfig", "./.svelte-kit/tsconfig"],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-svelte-plugin"
+      }
+    ]
+  }
+}
