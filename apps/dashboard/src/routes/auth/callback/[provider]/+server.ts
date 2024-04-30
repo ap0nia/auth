@@ -28,8 +28,6 @@ export const GET: RequestHandler = async (event) => {
       return error(500, `Failed to respond for: ${providerId}`)
     }
 
-    console.log('res: ', response)
-
     return response
   }
 
@@ -47,5 +45,5 @@ export const GET: RequestHandler = async (event) => {
 
   const searchParams = event.url.searchParams.size > 0 ? `?${event.url.searchParams}` : ''
 
-  return redirect(302, `${stateEntry.redirectUrl}${searchParams}`)
+  return redirect(307, `${stateEntry.redirectUrl}${searchParams}`)
 }

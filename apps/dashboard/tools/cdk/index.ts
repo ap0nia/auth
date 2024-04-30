@@ -14,7 +14,6 @@ const envSchema = Type.Object({
   GOOGLE_ID: Type.String(),
   GOOGLE_SECRET: Type.String(),
   GOOGLE_REFRESH_TOKEN: Type.String(),
-  GOOGLE_EMAIL: Type.String(),
   GOOGLE_CREDENTIALS_JSON: Type.String(),
 })
 

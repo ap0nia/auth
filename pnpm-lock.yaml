@@ -73,24 +73,24 @@ importers:
 
   apps/dashboard:
     dependencies:
+      '@ap0nia/svelte-og':
+        specifier: ^0.0.2
+        version: 0.0.2(typescript@5.1.6)
       '@aponia.js/auth.js':
-        specifier: ^0.6.5
-        version: 0.6.5(nodemailer@6.9.13)
+        specifier: ^0.6.6
+        version: 0.6.6(nodemailer@6.9.13)
       '@aponia.js/core':
-        specifier: ^0.6.5
-        version: 0.6.5
+        specifier: ^0.6.6
+        version: 0.6.6
       '@aponia.js/sveltekit':
-        specifier: ^0.6.5
-        version: 0.6.5(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
+        specifier: ^0.6.6
+        version: 0.6.6(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
       '@auth/core':
         specifier: ^0.28.2
         version: 0.28.2(nodemailer@6.9.13)
       '@icssc/ui':
         specifier: workspace:^
         version: link:../../packages/ui
-      '@icssc/vercel-og':
-        specifier: workspace:^
-        version: link:../../packages/vercel-og
       '@libsql/client':
         specifier: ^0.6.0
         version: 0.6.0
@@ -149,12 +149,12 @@ importers:
         specifier: ^3.22.4
         version: 3.23.4
     devDependencies:
+      '@ap0nia/vite-plugin-contentlayer':
+        specifier: ^0.0.3
+        version: 0.0.3(esbuild@0.20.2)
       '@iconify/json':
         specifier: ^2.2.200
         version: 2.2.204
-      '@icssc/vite-plugin-contentlayer':
-        specifier: workspace:^
-        version: link:../../packages/vite-plugin-contentlayer
       '@inlang/cli':
         specifier: ^2.14.0
         version: 2.15.3
@@ -493,14 +493,44 @@ packages:
       }
     dev: true
 
-  /@aponia.js/auth.js@0.6.5(nodemailer@6.9.13):
+  /@ap0nia/svelte-og@0.0.2(typescript@5.1.6):
     resolution:
       {
-        integrity: sha512-1jeAML2GAsyk4Mxb07L3IBV+pp9N13eK3cbzDqRVOgkHSZKksx7wcEGleatqTzzCiQdDmmEzRs4hGPltiifK+g==,
+        integrity: sha512-VW4//HOD6XXcQOxnWV+Z6Rs8e97qeNa4nWoq7W6okif/yOnBkgCHcsJej+gFEyyIhyuG955AYNpZhTeV7R9KYg==,
+      }
+    dependencies:
+      '@resvg/resvg-js': 2.6.2
+      satori: 0.10.13
+      satori-html: 0.3.2
+      svelte: 4.2.13
+      svelte2tsx: 0.7.7(svelte@4.2.13)(typescript@5.1.6)
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@ap0nia/vite-plugin-contentlayer@0.0.3(esbuild@0.20.2):
+    resolution:
+      {
+        integrity: sha512-yl1eUO5+GMm6AazqxHmc9E1pH28t4vTDNrnCc/FKpU+9F3d13JyZo2eeGlC2X6e1h7vbb/Snjz4sLtSCP8Paiw==,
+      }
+    dependencies:
+      '@contentlayer/core': 0.3.4(esbuild@0.20.2)
+      '@contentlayer/utils': 0.3.4
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - esbuild
+      - markdown-wasm
+      - supports-color
+    dev: true
+
+  /@aponia.js/auth.js@0.6.6(nodemailer@6.9.13):
+    resolution:
+      {
+        integrity: sha512-Myaz3l5DiUTZGVIJ3cBJHHkUssFlezSgxpzCDaGXRNsQqgCcrOk95uUEq3+dMG0ccx+KJwaYFZv32X4sX/+x6w==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
-      '@aponia.js/core': 0.6.5
+      '@aponia.js/core': 0.6.6
       '@auth/core': 0.28.2(nodemailer@6.9.13)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
@@ -508,10 +538,10 @@ packages:
       - nodemailer
     dev: false
 
-  /@aponia.js/core@0.6.5:
+  /@aponia.js/core@0.6.6:
     resolution:
       {
-        integrity: sha512-FdxnANETZQeVdKpcrvA/l2rvN3656kJissItVd+7uaUAP2JqGLtKRCLH2Nq8wjVhC6Mpt7OgM6F1VMAQ4BOS8A==,
+        integrity: sha512-jv4hbcGDDqihEhBrcGwvIJPGiH90GWdlECH90jpnVe85iaHqLG5kg+aCMDMcLEnSOLPO7QllhluOkGkZYYWg4w==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
@@ -521,14 +551,14 @@ packages:
       radix3: 1.1.2
     dev: false
 
-  /@aponia.js/sveltekit@0.6.5(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10):
+  /@aponia.js/sveltekit@0.6.6(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10):
     resolution:
       {
-        integrity: sha512-hQKV/jOkTO1QuOdgcddWJih5dJtmJlZCJgp+8Geb6EL9iLpdB4omeulxvbIYWXLZMdxZmWCwbK+6OT/36xywow==,
+        integrity: sha512-4MeidqxvRKhvNNuKLVYFg/E4WXYvPgwI5Z2DAuu9csEEcF7p3G4EAqjrc3cU0H/5hB4FB6a8vrSF7HCIt+PHOQ==,
       }
     engines: { node: '>=18', pnpm: ^8.0.0 }
     dependencies:
-      '@aponia.js/core': 0.6.5
+      '@aponia.js/core': 0.6.6
       '@sveltejs/kit': 2.5.7(@sveltejs/vite-plugin-svelte@3.1.0)(svelte@4.2.13)(vite@5.2.10)
     transitivePeerDependencies:
       - '@sveltejs/vite-plugin-svelte'

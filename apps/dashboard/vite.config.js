@@ -2,7 +2,7 @@
 
 import { paraglide } from '@inlang/paraglide-js-adapter-sveltekit/vite'
 import { sveltekit } from '@sveltejs/kit/vite'
-import { contentlayer } from '@icssc/vite-plugin-contentlayer'
+import { contentlayer } from '@ap0nia/vite-plugin-contentlayer'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vite'
 

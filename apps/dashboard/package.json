@@ -27,12 +27,12 @@
   },
   "type": "module",
   "dependencies": {
-    "@aponia.js/auth.js": "^0.6.5",
-    "@aponia.js/core": "^0.6.5",
-    "@aponia.js/sveltekit": "^0.6.5",
+    "@ap0nia/svelte-og": "^0.0.2",
+    "@aponia.js/auth.js": "^0.6.6",
+    "@aponia.js/core": "^0.6.6",
+    "@aponia.js/sveltekit": "^0.6.6",
     "@auth/core": "^0.28.2",
     "@icssc/ui": "workspace:^",
-    "@icssc/vercel-og": "workspace:^",
     "@libsql/client": "^0.6.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@resvg/resvg-js": "^2.6.2",
@@ -54,8 +54,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@ap0nia/vite-plugin-contentlayer": "^0.0.3",
     "@iconify/json": "^2.2.200",
-    "@icssc/vite-plugin-contentlayer": "workspace:^",
     "@inlang/cli": "^2.14.0",
     "@inlang/paraglide-js": "1.6.1",
     "@inlang/paraglide-js-adapter-sveltekit": "^0.6.5",
