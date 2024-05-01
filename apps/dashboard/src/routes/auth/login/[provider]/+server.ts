@@ -2,6 +2,7 @@ import { eventToRequest } from '@aponia.js/sveltekit'
 import { createId } from '@paralleldrive/cuid2'
 import { error } from '@sveltejs/kit'
 
+import { overrideSearchParams } from '$lib/utils/search-params'
 import { state } from '$server/db/state'
 import { auth } from '$server/services/auth'
 import { db } from '$server/services/db'
@@ -23,23 +24,11 @@ export const GET: RequestHandler = async (event) => {
   const originalRedirectUrl = oauthRedirect.searchParams.get('redirect_uri') ?? event.url.origin
 
   if (originalRedirectUrl.startsWith(AUTH_PROXY_ORIGIN)) {
-    if (event.url.searchParams.size > 0) {
-      const forwardedUrl = new URL(authResponse.redirect)
+    const forwardedUrl = new URL(authResponse.redirect)
 
-      Array.from(forwardedUrl.searchParams.keys()).forEach((key) => {
-        if (key !== 'redirect_uri') {
-          forwardedUrl.searchParams.delete(key)
-        }
-      })
+    overrideSearchParams(event.url.searchParams, forwardedUrl.searchParams, 'redirect_uri')
 
-      event.url.searchParams.forEach((value, key) => {
-        if (key !== 'redirect_uri') {
-          forwardedUrl.searchParams.set(key, value)
-        }
-      })
-
-      authResponse.redirect = forwardedUrl.toString()
-    }
+    authResponse.redirect = forwardedUrl.toString()
 
     const response = auth.toResponse(authResponse)
 

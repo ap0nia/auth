@@ -1,14 +1,12 @@
 import { eventToRequest } from '@aponia.js/sveltekit'
 import { error, redirect } from '@sveltejs/kit'
-import { eq } from 'drizzle-orm'
 import { Effect } from 'effect'
 
 import { notNullable } from '$lib/effects/null'
-import { DbSelectError } from '$lib/errors/db'
 import { encodeSearchParams, forwardSearchParams } from '$lib/utils/search-params'
-import { state } from '$server/db'
+import { findById } from '$server/repositories/state'
 import { auth } from '$server/services/auth'
-import { db } from '$server/services/db'
+import { Db, db } from '$server/services/db'
 
 import type { RequestEvent, RequestHandler } from './$types'
 
@@ -31,7 +29,7 @@ const handleCallback = (event: RequestEvent) => {
       return response
     }
 
-    const state = yield* _(findState(id))
+    const state = yield* _(findById(id))
 
     if (state == null) {
       const response = yield* _(handleRegularCallback(event))
@@ -59,26 +57,6 @@ const handleCallback = (event: RequestEvent) => {
   return mappedEffect
 }
 
-function findState(id: string) {
-  const effect = Effect.gen(function* (_) {
-    const result = yield* _(
-      Effect.tryPromise({
-        try: async () => {
-          return await db.query.state.findFirst({
-            where: eq(state.id, id),
-          })
-        },
-        catch: (error) => {
-          console.error(`Error while searching for state with id ${id}`, error)
-          return new DbSelectError()
-        },
-      }),
-    )
-    return result
-  })
-  return effect
-}
-
 export const GET: RequestHandler = async (event) => {
-  return await Effect.runPromise(handleCallback(event))
+  return await Effect.runPromise(Effect.provideService(handleCallback(event), Db, db))
 }
