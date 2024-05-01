@@ -17,6 +17,7 @@ export const google = new OIDCProvider(
   Google({
     clientId: GOOGLE_ID,
     clientSecret: GOOGLE_SECRET,
+    checks: ['pkce', 'state'],
   }),
 )
 
@@ -32,6 +33,7 @@ const adapter = new AdapterPlugin(rawAdapter)
 export const jwt = new JwtSessionPlugin()
 
 export const auth = new Auth({
+  origin: 'https://d16zahr97f1m40.cloudfront.net',
   plugins: [google, adapter, jwt],
 })
 

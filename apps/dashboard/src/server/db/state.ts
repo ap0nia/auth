@@ -8,9 +8,9 @@ export const state = sqliteTable('state', {
   id: text('id').primaryKey().$defaultFn(createId),
 
   /**
-   * The origin of the request.
+   * The original search params sent with the OAuth request.
    */
-  redirectUrl: text('redirect_url').notNull(),
+  params: text('params').default('').notNull(),
 })
 
 export type State = typeof state.$inferSelect

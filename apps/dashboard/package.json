@@ -28,9 +28,9 @@
   "type": "module",
   "dependencies": {
     "@ap0nia/svelte-og": "^0.0.2",
-    "@aponia.js/auth.js": "^0.6.6",
-    "@aponia.js/core": "^0.6.6",
-    "@aponia.js/sveltekit": "^0.6.6",
+    "@aponia.js/auth.js": "^0.6.9",
+    "@aponia.js/core": "^0.6.9",
+    "@aponia.js/sveltekit": "^0.6.9",
     "@auth/core": "^0.28.2",
     "@icssc/ui": "workspace:^",
     "@libsql/client": "^0.6.0",

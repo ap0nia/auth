@@ -11,12 +11,6 @@ import type { RequestHandler } from './$types'
 export const GET: RequestHandler = async (event) => {
   const providerId = event.params.provider as keyof typeof providers
 
-  const provider = providers[providerId]
-
-  if (provider == null) {
-    return error(500, `Unknown provider ID: ${providerId}`)
-  }
-
   const stateId = event.url.searchParams.get('state')
 
   if (stateId == null) {
@@ -36,14 +30,39 @@ export const GET: RequestHandler = async (event) => {
   })
 
   if (stateEntry == null) {
-    return error(500, `State ID not found.`)
+    const authRequest = eventToRequest(event)
+    const authResponse = await auth.handle(authRequest)
+    const response = auth.toResponse(authResponse)
+
+    if (response == null) {
+      return error(500, `Failed to respond for: ${providerId}`)
+    }
+
+    return response
   }
 
-  // Remove state search param since only this proxy needs it.
+  const params = new URLSearchParams(stateEntry.params)
 
-  event.url.searchParams.delete('state')
+  const originalRedirect = params.get('redirect_uri') ?? event.url.origin
 
-  const searchParams = event.url.searchParams.size > 0 ? `?${event.url.searchParams}` : ''
+  if (originalRedirect.startsWith(event.url.origin)) {
+    const authRequest = eventToRequest(event)
+    const authResponse = await auth.handle(authRequest)
+    const response = auth.toResponse(authResponse)
 
-  return redirect(307, `${stateEntry.redirectUrl}${searchParams}`)
+    if (response == null) {
+      return error(500, `Failed to respond for: ${providerId}`)
+    }
+
+    return response
+  }
+
+  event.url.searchParams.forEach((value, key) => {
+    params.set(key, value)
+  })
+
+  return redirect(
+    307,
+    `${originalRedirect}${event.url.searchParams.size > 0 ? '?' : ''}${event.url.searchParams}`,
+  )
 }
