@@ -2,12 +2,12 @@ import { createClient } from '@libsql/client/web'
 import { drizzle } from 'drizzle-orm/libsql'
 import { Context } from 'effect'
 
-import { TURSO_AUTH_TOKEN, TURSO_CONNECTION_URL } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 import * as schema from '$server/db'
 
 export const client = createClient({
-  url: TURSO_CONNECTION_URL,
-  authToken: TURSO_AUTH_TOKEN,
+  url: env.TURSO_CONNECTION_URL,
+  authToken: env.TURSO_AUTH_TOKEN,
 })
 
 export const db = drizzle(client, { schema })

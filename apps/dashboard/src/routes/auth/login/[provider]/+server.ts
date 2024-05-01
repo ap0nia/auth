@@ -4,7 +4,7 @@ import { Effect } from 'effect'
 
 import { PUBLIC_AUTH_PROXY } from '$env/static/public'
 import { notNullable } from '$lib/effects/null'
-import { handleAuthRequest } from '$lib/effects/sveltekit'
+import { handleAuthRequest, runHandleEffect } from '$lib/effects/sveltekit'
 import { HandleError, RedirectError, SecurityError } from '$lib/errors/oauth'
 import { encodeSearchParams, overrideSearchParams } from '$lib/utils/search-params'
 import { insert } from '$server/repositories/state'
@@ -92,9 +92,11 @@ function handleLogin(event: RequestEvent) {
     }
   })
 
-  return mappedEffect
+  const caughtDefects = Effect.catchAllDefect(mappedEffect, Effect.succeed)
+
+  return caughtDefects
 }
 
 export const GET: RequestHandler = async (event) => {
-  return await Effect.runPromise(Effect.provide(handleLogin(event), layer))
+  return await runHandleEffect(Effect.provide(handleLogin(event), layer))
 }

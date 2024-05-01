@@ -109,6 +109,9 @@ importers:
       '@tanstack/svelte-query':
         specifier: ^5.29.0
         version: 5.32.0(svelte@4.2.13)
+      bits-ui:
+        specifier: ^0.21.5
+        version: 0.21.5(svelte@4.2.13)
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
@@ -124,6 +127,9 @@ importers:
       elysia:
         specifier: ^1.0.13
         version: 1.0.15(@sinclair/typebox@0.32.27)(typescript@5.1.6)
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       mdast-util-toc:
         specifier: ^7.0.0
         version: 7.0.0
@@ -185,6 +191,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.12
         version: 0.5.13(tailwindcss@3.4.3)
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
       '@types/mdast':
         specifier: ^4.0.3
         version: 4.0.3
@@ -318,7 +327,7 @@ importers:
   packages/ui:
     dependencies:
       bits-ui:
-        specifier: ^0.21.2
+        specifier: ^0.21.5
         version: 0.21.5(svelte@4.2.13)
       clsx:
         specifier: ^2.1.0
@@ -7070,6 +7079,13 @@ packages:
       }
     dev: true
 
+  /@types/js-cookie@3.0.6:
+    resolution:
+      {
+        integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==,
+      }
+    dev: true
+
   /@types/json-schema@7.0.15:
     resolution:
       {
@@ -12158,6 +12174,14 @@ packages:
       {
         integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==,
       }
+    dev: false
+
+  /js-cookie@3.0.5:
+    resolution:
+      {
+        integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==,
+      }
+    engines: { node: '>=14' }
     dev: false
 
   /js-tokens@4.0.0:

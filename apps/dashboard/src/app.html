@@ -5,12 +5,40 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/png" href="%sveltekit.assets%/favicon.png" />
+    <!-- SEO -->
+    <meta name="description" content="ICSSC website">
+    <link rel="author" href="https://studentcouncil.ics.uci.edu">
+    <meta name="author" content="icssc">
+    <!-- <link rel="manifest" href="%manifest%"> -->
+    <meta name="keywords" content="UCI,ICS,student">
+    <meta name="creator" content="icssc">
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="ICSSC">
+    <meta property="og:description" content="An open source application built using the new router, server components and everything new in Next.js 13.">
+    <meta property="og:url" content="%og:url%">
+    <meta property="og:site_name" content="Taxonomy">
+    <meta property="og:locale" content="%og:locale%">
+    <meta property="og:image:width" content="%og:image:width%">
+    <meta property="og:image:height" content="%og:image:height%">
+    <meta property="og:image" content="%og:image%">
+    <meta property="og:type" content="website">
+
+    <!-- Paraglide i18n -->
+    <html lang="%paraglide.lang%" dir="%paraglide.textDirection%">
+
+    <!-- Icons -->
+    <!--
+    <link rel="shortcut icon" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    -->
 
     <title>ICSSC</title>
 
     %sveltekit.head%
   </head>
+
   <body>
     <div style="display: contents">%sveltekit.body%</div>
   </body>

@@ -1,12 +1,12 @@
 import { OIDCProvider } from '@aponia.js/auth.js/providers/oidc'
 import Google, { type GoogleProfile as _GoogleProfile } from '@auth/core/providers/google'
 
-import { GOOGLE_ID, GOOGLE_SECRET } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 
 export const google = new OIDCProvider(
   Google({
-    clientId: GOOGLE_ID,
-    clientSecret: GOOGLE_SECRET,
+    clientId: env.GOOGLE_ID,
+    clientSecret: env.GOOGLE_SECRET,
     checks: ['pkce', 'state'],
   }),
 )

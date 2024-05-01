@@ -1,8 +1,7 @@
-// import { sveltekit } from '@aponia.js/sveltekit'
-// import { sequence } from '@sveltejs/kit/hooks'
+import { sequence } from '@sveltejs/kit/hooks'
 
-// import { auth } from '$server/services/auth'
+import { i18n } from '$lib/i18n'
 
-// const authenticationHandle = sveltekit(auth)
+const i18nhandle = i18n.handle()
 
-// export const handle = sequence(authenticationHandle)
+export const handle = sequence(i18nhandle)

@@ -15,6 +15,7 @@ const envSchema = Type.Object({
   GOOGLE_SECRET: Type.String(),
   GOOGLE_REFRESH_TOKEN: Type.String(),
   GOOGLE_CREDENTIALS_JSON: Type.String(),
+  PUBLIC_AUTH_PROXY: Type.String(),
 })
 
 const cleanEnv = Value.Clean(envSchema, { ...process.env })

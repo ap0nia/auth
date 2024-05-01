@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "bits-ui": "^0.21.2",
+    "bits-ui": "^0.21.5",
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.17",
     "lucide-svelte": "^0.363.0",
@@ -67,10 +67,10 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.196",
+    "@icssc/tsconfig": "workspace:^",
     "@sveltejs/kit": "^2.5.4",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tailwindcss/typography": "^0.5.12",
-    "@icssc/tsconfig": "workspace:^",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.9.0",
     "postcss": "^8.4.38",

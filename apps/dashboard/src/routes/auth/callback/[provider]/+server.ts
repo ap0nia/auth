@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit'
 import { Effect } from 'effect'
 
 import { notNullable } from '$lib/effects/null'
-import { handleAuthRequest } from '$lib/effects/sveltekit'
+import { handleAuthRequest, runHandleEffect } from '$lib/effects/sveltekit'
 import { encodeSearchParams, forwardSearchParams } from '$lib/utils/search-params'
 import { findById } from '$server/repositories/state'
 import { layer } from '$server/services'
@@ -58,9 +58,11 @@ function handleCallback(event: RequestEvent) {
     return error(500, `Failed to handle callback for provider: ${provider}.`)
   })
 
-  return mappedEffect
+  const caughtDefects = Effect.catchAllDefect(mappedEffect, Effect.succeed)
+
+  return caughtDefects
 }
 
 export const GET: RequestHandler = async (event) => {
-  return await Effect.runPromise(Effect.provide(handleCallback(event), layer))
+  return await runHandleEffect(Effect.provide(handleCallback(event), layer))
 }
