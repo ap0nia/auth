@@ -6,7 +6,6 @@
   import { afterNavigate } from '$app/navigation'
   import LanguageSelect from '$lib/components/language-select.svelte'
   import Logo from '$lib/components/icons/logo.svelte'
-  import ThemeSelect from '$lib/components/theme/select.svelte'
   import ThemeToggle from '$lib/components/theme/toggle.svelte'
 
   let open = false
@@ -98,19 +97,9 @@
         </ul>
       </div>
 
-      <div class="navbar-end flex items-center gap-2 w-auto">
-        <div class="p-2 hidden sm:flex items-center gap-2 shrink-0">
-          <div class="join ring-1 ring-base-content">
-            <div class="join-item lg:rounded-r-0">
-              <ThemeToggle class="h-10 lg:rounded-r-none" />
-            </div>
-
-            <div class="divider divider-horizontal join-item m-0 w-0 hidden xl:flex" />
-
-            <div class="join-item">
-              <ThemeSelect triggerClasses="min-w-32 ring-0 rounded-l-none" contentClasses="!w-56" />
-            </div>
-          </div>
+      <div class="navbar-end flex shrink-0 items-center gap-2 w-auto">
+        <div class="hidden sm:flex gap-2">
+          <ThemeToggle class="h-10 ring-1 ring-base-content" />
 
           <LanguageSelect />
         </div>
