@@ -1,71 +1,100 @@
-import { eventToRequest } from '@aponia.js/sveltekit'
 import { createId } from '@paralleldrive/cuid2'
 import { error } from '@sveltejs/kit'
+import { Effect } from 'effect'
 
-import { overrideSearchParams } from '$lib/utils/search-params'
-import { state } from '$server/db/state'
-import { auth } from '$server/services/auth'
-import { db } from '$server/services/db'
+import { PUBLIC_AUTH_PROXY } from '$env/static/public'
+import { notNullable } from '$lib/effects/null'
+import { handleAuthRequest } from '$lib/effects/sveltekit'
+import { HandleError, RedirectError, SecurityError } from '$lib/errors/oauth'
+import { encodeSearchParams, overrideSearchParams } from '$lib/utils/search-params'
+import { insert } from '$server/repositories/state'
+import { layer } from '$server/services'
+import { Auth } from '$server/services/auth'
 
-import type { RequestHandler } from './$types'
+import type { RequestEvent, RequestHandler } from './$types'
 
-const AUTH_PROXY_ORIGIN = 'https://d16zahr97f1m40.cloudfront.net'
+function handleLogin(event: RequestEvent) {
+  const effect = Effect.gen(function* (_) {
+    const auth = yield* _(Auth)
 
-export const GET: RequestHandler = async (event) => {
-  const authRequest = eventToRequest(event)
-  const authResponse = await auth.handle(authRequest)
+    const maybeAuthResponse = yield* _(handleAuthRequest(event))
 
-  if (authResponse?.redirect == null) {
-    return error(500, `Failed to generate redirect URL for: ${event.params.provider}`)
-  }
+    const authResponse = yield* _(
+      Effect.mapError(notNullable(maybeAuthResponse), () => new HandleError()),
+    )
 
-  const oauthRedirect = new URL(authResponse.redirect)
+    const authResponseRedirect = yield* _(
+      Effect.mapError(notNullable(authResponse?.redirect), () => new RedirectError()),
+    )
 
-  const originalRedirectUrl = oauthRedirect.searchParams.get('redirect_uri') ?? event.url.origin
+    const oauthRedirect = new URL(authResponseRedirect)
 
-  if (originalRedirectUrl.startsWith(AUTH_PROXY_ORIGIN)) {
-    const forwardedUrl = new URL(authResponse.redirect)
+    const originalRedirectUrl = oauthRedirect.searchParams.get('redirect_uri') ?? event.url.origin
 
-    overrideSearchParams(event.url.searchParams, forwardedUrl.searchParams, 'redirect_uri')
+    if (originalRedirectUrl.startsWith(PUBLIC_AUTH_PROXY)) {
+      const forwardedUrl = new URL(authResponseRedirect)
 
-    authResponse.redirect = forwardedUrl.toString()
+      overrideSearchParams(event.url.searchParams, forwardedUrl.searchParams, 'redirect_uri')
 
-    const response = auth.toResponse(authResponse)
+      authResponse.redirect = forwardedUrl.toString()
 
-    if (response == null) {
-      return error(500, `Failed to create auth response for: ${event.params.provider}`)
+      const maybeResponse = auth.toResponse(authResponse)
+
+      const response = yield* _(
+        Effect.mapError(notNullable(maybeResponse), () => new HandleError()),
+      )
+
+      return response
     }
 
+    const stateId = oauthRedirect.searchParams.get('state')
+
+    const id = stateId ?? event.url.searchParams.get('state') ?? createId()
+
+    if (stateId == null) {
+      oauthRedirect.searchParams.set('state', id)
+    }
+
+    const [maybeNewState] = yield* _(
+      insert({
+        id,
+        params: oauthRedirect.searchParams.toString(),
+      }),
+    )
+
+    yield* _(Effect.mapError(notNullable(maybeNewState), () => new SecurityError()))
+
+    const queryString = encodeSearchParams(oauthRedirect.searchParams)
+
+    authResponse.redirect = `${PUBLIC_AUTH_PROXY}${event.url.pathname}${queryString}`
+
+    const maybeResponse = auth.toResponse(authResponse)
+
+    const response = yield* _(Effect.mapError(notNullable(maybeResponse), () => new HandleError()))
+
     return response
-  }
+  })
 
-  const stateId = oauthRedirect.searchParams.get('state')
+  const mappedEffect = Effect.mapError(effect, (err) => {
+    switch (err._tag) {
+      case 'SecurityError':
+      case 'DbSelectError': {
+        return error(500, `Failed to generate and save state for: ${event.params.provider}`)
+      }
 
-  const id = stateId ?? event.url.searchParams.get('state') ?? createId()
+      case 'HandleError': {
+        return error(500, `Failed to handle auth request for: ${event.params.provider}`)
+      }
 
-  if (stateId == null) {
-    oauthRedirect.searchParams.set('state', id)
-  }
+      case 'RedirectError': {
+        return error(500, `Failed to generate redirect URL for: ${event.params.provider}`)
+      }
+    }
+  })
 
-  const [newState] = await db
-    .insert(state)
-    .values({
-      id,
-      params: oauthRedirect.searchParams.toString(),
-    })
-    .returning()
+  return mappedEffect
+}
 
-  if (newState == null) {
-    return error(500, `Failed to save state: ${event.params.provider}`)
-  }
-
-  authResponse.redirect = `${AUTH_PROXY_ORIGIN}/auth/login/${event.params.provider}?${oauthRedirect.searchParams}`
-
-  const response = auth.toResponse(authResponse)
-
-  if (response == null) {
-    return error(500, `Failed to create auth response for: ${event.params.provider}`)
-  }
-
-  return response
+export const GET: RequestHandler = async (event) => {
+  return await Effect.runPromise(Effect.provide(handleLogin(event), layer))
 }

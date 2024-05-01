@@ -1,38 +1,42 @@
-import { eventToRequest } from '@aponia.js/sveltekit'
 import { error, redirect } from '@sveltejs/kit'
 import { Effect } from 'effect'
 
 import { notNullable } from '$lib/effects/null'
+import { handleAuthRequest } from '$lib/effects/sveltekit'
 import { encodeSearchParams, forwardSearchParams } from '$lib/utils/search-params'
 import { findById } from '$server/repositories/state'
-import { auth } from '$server/services/auth'
-import { Db, db } from '$server/services/db'
+import { layer } from '$server/services'
+import { Auth } from '$server/services/auth'
 
 import type { RequestEvent, RequestHandler } from './$types'
 
-const handleRegularCallback = (event: RequestEvent) => {
-  return Effect.gen(function* (_) {
-    const authRequest = eventToRequest(event)
-    const authResponse = yield* _(Effect.promise(() => auth.handle(authRequest)))
+/**
+ * Creates {@link Aponia.Response} and converts it to {@link Response} for SvelteKit.
+ */
+function handleAuthCallback(event: RequestEvent) {
+  const effect = Effect.gen(function* (_) {
+    const auth = yield* _(Auth)
+    const authResponse = yield* _(handleAuthRequest(event))
     const response = yield* _(notNullable(auth.toResponse(authResponse)))
     return response
   })
+  return effect
 }
 
-const handleCallback = (event: RequestEvent) => {
+function handleCallback(event: RequestEvent) {
   const id = event.url.searchParams.get('state')
   const provider = event.params.provider
 
   const effect = Effect.gen(function* (_) {
     if (id == null) {
-      const response = yield* _(handleRegularCallback(event))
+      const response = yield* _(handleAuthCallback(event))
       return response
     }
 
     const state = yield* _(findById(id))
 
     if (state == null) {
-      const response = yield* _(handleRegularCallback(event))
+      const response = yield* _(handleAuthCallback(event))
       return response
     }
 
@@ -41,7 +45,7 @@ const handleCallback = (event: RequestEvent) => {
     const originalRedirect = params.get('redirect_uri') ?? event.url.origin
 
     if (originalRedirect.startsWith(event.url.origin)) {
-      const response = yield* _(handleRegularCallback(event))
+      const response = yield* _(handleAuthCallback(event))
       return response
     }
 
@@ -58,5 +62,5 @@ const handleCallback = (event: RequestEvent) => {
 }
 
 export const GET: RequestHandler = async (event) => {
-  return await Effect.runPromise(Effect.provideService(handleCallback(event), Db, db))
+  return await Effect.runPromise(Effect.provide(handleCallback(event), layer))
 }

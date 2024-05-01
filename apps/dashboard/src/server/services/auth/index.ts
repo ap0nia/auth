@@ -3,23 +3,15 @@
  * TODO: add passwordless email provider.
  */
 
-import { OIDCProvider } from '@aponia.js/auth.js/providers/oidc'
 import { AdapterPlugin } from '@aponia.js/core/adapter'
-import { Auth } from '@aponia.js/core/auth'
-import { JwtSessionPlugin } from '@aponia.js/core/plugins/session/jwt'
-import Google, { type GoogleProfile as _GoogleProfile } from '@auth/core/providers/google'
+import { Auth as AponiaAuth } from '@aponia.js/core/auth'
+import { Context } from 'effect'
 
-import { GOOGLE_ID, GOOGLE_SECRET } from '$env/static/private'
+import { PUBLIC_AUTH_PROXY } from '$env/static/public'
 
 import { adapter as rawAdapter } from './adapter'
-
-export const google = new OIDCProvider(
-  Google({
-    clientId: GOOGLE_ID,
-    clientSecret: GOOGLE_SECRET,
-    checks: ['pkce', 'state'],
-  }),
-)
+import { providers } from './providers'
+import { jwt } from './session'
 
 /**
  * After logging in with a provider, e.g. GitHub, Google, Credentials,
@@ -27,16 +19,12 @@ export const google = new OIDCProvider(
  */
 const adapter = new AdapterPlugin(rawAdapter)
 
-/**
- * encodes/decodes cookies whenever session is set or read.
- */
-export const jwt = new JwtSessionPlugin()
-
-export const auth = new Auth({
-  origin: 'https://d16zahr97f1m40.cloudfront.net',
-  plugins: [google, adapter, jwt],
+export const auth = new AponiaAuth({
+  origin: PUBLIC_AUTH_PROXY,
+  plugins: [...Object.values(providers), adapter, jwt],
 })
 
-export const providers = {
-  google,
-}
+/**
+ * Auth dependency for effects.
+ */
+export class Auth extends Context.Tag('Auth')<Auth, typeof auth>() {}
