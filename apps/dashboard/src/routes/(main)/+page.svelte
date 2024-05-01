@@ -12,13 +12,20 @@
           <div class="input"></div>
         </div>
 
-        <div class="p-8 gap-4 flex flex-col bg-base-200">
+        <div class="p-8 gap-4 flex flex-col bg-base-200 text-lg">
           <p class="text-center text-5xl font-bold">ICS Student Council</p>
 
           <p>
             Stop by our general meetings! We have various social and academic events for everyone.
           </p>
-          <p>Join us every Wednesday 7-8pm at DBH 6011!</p>
+
+          <p>
+            Join us every
+            <u>
+              <strong>Wednesday 7-8pm at DBH 6011</strong>
+            </u>
+            !
+          </p>
 
           <div>
             <a href="/" class="btn btn-primary">Get Involved</a>
@@ -26,13 +33,19 @@
         </div>
       </div>
 
-      <div class="p-8 gap-4 lg:hidden flex flex-col bg-base-200">
+      <div class="p-8 gap-4 lg:hidden flex flex-col text-lg">
         <p class="text-center text-5xl font-bold">ICS Student Council</p>
 
         <p>
           Stop by our general meetings! We have various social and academic events for everyone.
         </p>
-        <p>Join us every Wednesday 7-8pm at DBH 6011!</p>
+        <p>
+          Join us every
+          <u>
+            <strong>Wednesday 7-8pm at DBH 6011</strong>
+          </u>
+          !
+        </p>
 
         <div>
           <a href="/" class="btn btn-primary">Get Involved</a>
@@ -60,9 +73,7 @@
         </p>
 
         <div>
-          <a href="/about" class="link link-secondary-content link-hover text-lg">
-            Learn More
-          </a>
+          <a href="/about" class="link link-secondary-content link-hover text-lg"> Learn More </a>
         </div>
       </div>
 
@@ -70,5 +81,9 @@
         <img src="/image/anteater_hw.png" alt="anteater doing homework" class="" width="400px" />
       </div>
     </div>
+  </div>
+
+  <div>
+    SPONSORS
   </div>
 </main>
