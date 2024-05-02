@@ -14,7 +14,7 @@
 <SelectPrimitive.Trigger
   class={cn(
     'btn btn-sm btn-ghost border no-animation',
-    'h-10 flex items-center justify-between',
+    'flex items-center justify-between',
     'ring-1 ring-base-content focus:ring focus:ring-offset-2',
     'data-[disabled]:btn-disabled data-[highlighted]:btn-active data-[state=open]:btn-active',
     className,

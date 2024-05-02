@@ -99,12 +99,11 @@
 
       <div class="navbar-end flex shrink-0 items-center gap-2 w-auto">
         <div class="hidden sm:flex gap-2">
-          <ThemeToggle class="h-10 ring-1 ring-base-content" />
-
+          <ThemeToggle class="h-8 ring-1 ring-base-content" />
           <LanguageSelect />
         </div>
 
-        <a href="/auth/login" class="btn btn-primary h-10 min-h-0">Login</a>
+        <a href="/auth/login" class="btn btn-primary btn-sm">Login</a>
       </div>
     </div>
   </header>

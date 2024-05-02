@@ -1,3 +1,7 @@
+<script lang="ts">
+  import ChevronRightIcon from '~icons/mdi/chevron-right'
+</script>
+
 <main class="grow flex flex-col">
   <div class="hero px-4 py-40">
     <div class="hero-content max-w-6xl flex flex-wrap lg:flex-nowrap gap-8">
@@ -63,9 +67,9 @@
   <div class="p-8 bg-secondary">
     <div class="max-w-6xl mx-auto flex flex-wrap lg:flex-nowrap gap-8">
       <div class="space-y-4 text-center lg:text-left">
-        <h2 class="text-secondary-content text-4xl font-bold">About Us</h2>
+        <h2 class="text-primary text-4xl font-bold">About Us</h2>
 
-        <p class="text-lg">
+        <p class="text-lg text-secondary-content">
           ICS Student Council, founded in 2010, is a student-run organization that serves ICS
           students. Our mission is to deepen students' connections with the Donald Bren School of
           Information and Computer Sciences & UCI Alumni and improve them professionally, socially,
@@ -73,17 +77,16 @@
         </p>
 
         <div>
-          <a href="/about" class="link link-secondary-content link-hover text-lg"> Learn More </a>
+          <a href="/about" class="link link-hover text-primary text-lg flex items-center gap-2">
+            <span>Learn More</span>
+            <ChevronRightIcon />
+          </a>
         </div>
       </div>
 
       <div class="shrink-0 flex justify-center grow">
-        <img src="/image/anteater_hw.png" alt="anteater doing homework" class="" width="400px" />
+        <img src="/image/anteater_hw.png" alt="anteater doing homework" width="400px" />
       </div>
     </div>
-  </div>
-
-  <div>
-    SPONSORS
   </div>
 </main>
